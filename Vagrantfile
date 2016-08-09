@@ -16,6 +16,13 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision :shell do |shell|
     shell.inline = '
+      curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
+      chmod a+x /usr/local/bin/symfony
+    '
+  end
+
+  config.vm.provision :shell do |shell|
+    shell.inline = '
       apt-get update
 
       /bin/bash /vagrant/puppet/files/install.sh /vagrant/puppet/modules
@@ -26,7 +33,7 @@ Vagrant.configure(2) do |config|
     '
   end
 
-  config.vm.synced_folder "./www/site/", "/var/www/dev.192.168.66.66.xip.io/", id: "dev.192.168.66.66.xip.io", type: nil,
+  config.vm.synced_folder "./www", "/var/www/", id: "www", type: nil,
       group: 'vagrant', owner: 'vagrant', mount_options: ["dmode=775", "fmode=764"]
 
   config.vm.provision :puppet do |puppet|

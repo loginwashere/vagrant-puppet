@@ -8,7 +8,27 @@ php::dev: true
 php::composer: true
 php::pear: true
 php::phpunit: false
-php::phpunit: false
+
+php::fpm::config::user: 'vagrant'
+php::fpm::config::group: 'vagrant'
+
+php::extensions:
+    bcmath:
+        ensure: 'installed'
+    pdo-mysql:
+        ensure: 'installed'
+    redis:
+        ensure: 'installed'
+    intl:
+        ensure: 'installed'
+    gd:
+        ensure: 'installed'
+    xdebug:
+        ensure: 'installed'
+    imagick:
+        ensure: 'installed'
+        provider: pecl
+
 
 mysql::server::root_password: 'root'
 mysql::server::override_options:
@@ -16,8 +36,42 @@ mysql::server::override_options:
         bind-address: '127.0.0.1'
         max_connections: 500
 
+mysql_databases:
+    'site':
+        user: 'siteuser'
+        password: 'siteuserpassword'
+        host: '127.0.0.1'
+        grant: ['ALL']
+        import_timeout: 900
+    'site_test':
+        user: 'siteuser'
+        password: 'siteuserpassword'
+        host: '127.0.0.1'
+        grant: ['ALL']
+        import_timeout: 900
+    'symfony':
+        user: 'symfonyuser'
+        password: 'symfonypassword'
+        host: '127.0.0.1'
+        grant: ['ALL']
+        import_timeout: 900
+    'symfony_test':
+        user: 'symfonyuser'
+        password: 'symfonypassword'
+        host: '127.0.0.1'
+        grant: ['ALL']
+        import_timeout: 900
+
 redis::conf_port: 6379
 redis::conf_bind: '127.0.0.1'
 
-
-nginx::gzip: 'on'
+nginx_sites:
+    'site.192.168.66.66.xip.io':
+        template: '/vagrant/puppet/files/nginx/site.conf.erb'
+        docroot: '/var/www/site/web'
+    'symfony-dev.192.168.66.66.xip.io':
+        template: '/vagrant/puppet/files/nginx/symfony-dev.conf.erb'
+        docroot: '/var/www/symfony/web'
+    'app.192.168.66.66.xip.io':
+        template: '/vagrant/puppet/files/nginx/site.conf.erb'
+        docroot: '/var/www/app/web'
