@@ -1,0 +1,23 @@
+---
+php::globals::php_version: '7.0'
+php::globals::config_root: '/etc/php/7.0'
+
+php::manage_repos: true
+php::fpm: true
+php::dev: true
+php::composer: true
+php::pear: true
+php::phpunit: false
+php::phpunit: false
+
+mysql::server::root_password: 'root'
+mysql::server::override_options:
+    mysqld:
+        bind-address: '127.0.0.1'
+        max_connections: 500
+
+redis::conf_port: 6379
+redis::conf_bind: '127.0.0.1'
+
+
+nginx::gzip: 'on'

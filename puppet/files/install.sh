@@ -6,8 +6,8 @@ if [ ! -d "/vagrant/puppet/modules/nginx" ]; then
   puppet module install example42/nginx --version 2.3.1 --modulepath=$MODULES_PATH;
 fi
 
-if [ ! -d "/vagrant/puppet/modules/nginx" ]; then
-  puppet module upgrade mayflower-php --version 4.0.0-beta1 --modulepath=$MODULES_PATH;
+if [ ! -d "/vagrant/puppet/modules/php" ]; then
+  puppet module install mayflower-php --version 4.0.0-beta1 --modulepath=$MODULES_PATH;
 fi
 
 if [ ! -d "/vagrant/puppet/modules/mysql" ]; then

@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.network "private_network", ip: "192.168.66.66"
 
   config.vm.provision :shell do |shell|
     shell.inline = '
@@ -20,13 +20,13 @@ Vagrant.configure(2) do |config|
 
       /bin/bash /vagrant/puppet/files/install.sh /vagrant/puppet/modules
 
-      mkdir -pv /etc/puppet/hieradata/dev
+      mkdir -pv /etc/puppet/hieradata
 
       cp -v /vagrant/puppet/dev.yaml /etc/puppet/hieradata/dev.yaml
     '
   end
 
-  config.vm.synced_folder "./www/site/", "/var/www/dev.192.168.33.10.xip.io/", id: "dev.192.168.33.10.xip.io", type: nil,
+  config.vm.synced_folder "./www/site/", "/var/www/dev.192.168.66.66.xip.io/", id: "dev.192.168.66.66.xip.io", type: nil,
       group: 'vagrant', owner: 'vagrant', mount_options: ["dmode=775", "fmode=764"]
 
   config.vm.provision :puppet do |puppet|
@@ -38,7 +38,7 @@ Vagrant.configure(2) do |config|
       "environment" => ENV['APP_ENV'] ? ENV['APP_ENV'] : 'dev'
     }
 
-#    puppet.hiera_config_path  = "puppet/hiera.yaml"
+    puppet.hiera_config_path  = "puppet/hiera.yaml"
     puppet.options = "--verbose --debug"
   end
 end
